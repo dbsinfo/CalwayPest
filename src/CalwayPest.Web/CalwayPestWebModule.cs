@@ -112,6 +112,15 @@ public class CalwayPestWebModule : AbpModule
         ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
+        
+        // Add session support
+        context.Services.AddDistributedMemoryCache();
+        context.Services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(30);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -216,6 +225,7 @@ public class CalwayPestWebModule : AbpModule
         app.UseCorrelationId();
         app.MapAbpStaticAssets();
         app.UseRouting();
+        app.UseSession();
         app.UseAuthentication();
         app.UseAbpOpenIddictValidation();
 

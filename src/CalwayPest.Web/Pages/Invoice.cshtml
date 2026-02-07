@@ -1,0 +1,434 @@
+@page
+@model CalwayPest.Web.Pages.InvoiceModel
+@{Layout = null;}
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generate Invoice - Calway Pest Control</title>
+<link href="fonts/fonts.css" rel="stylesheet">
+<style>
+html{scroll-behavior:auto !important;}
+body{overflow-anchor:none;margin:0;padding:0;font-family:'Open Sans', sans-serif;background-color:#f5f5f5;}
+
+/* Header */
+.header{background-color:#ffffff;padding:20px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1);position:sticky;top:0;z-index:100;}
+.header-content{max-width:1240px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;}
+.logo-container img{max-width:350px;height:auto;}
+.logout-btn{background-color:#fc5185;color:#fff;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;}
+.logout-btn:hover{background-color:#d63163;}
+
+/* Main Content */
+.main-content{max-width:1200px;margin:40px auto;padding:0 20px;}
+.page-title{color:#4A6B4F;margin-bottom:30px;text-align:center;}
+.invoice-container{background:#ffffff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);padding:40px;margin-bottom:30px;}
+.section-title{color:#4A6B4F;border-bottom:2px solid #4A6B4F;padding-bottom:10px;margin-bottom:20px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;margin-bottom:8px;color:#333;font-weight:500;}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:12px;border:1px solid #ddd;border-radius:5px;font-size:14px;box-sizing:border-box;font-family:'Open Sans', sans-serif;}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:#4A6B4F;}
+.form-group textarea{resize:vertical;min-height:80px;}
+
+/* Items Table */
+.items-section{margin-top:30px;}
+.items-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+.items-table th,.items-table td{padding:12px;text-align:left;border-bottom:1px solid #ddd;}
+.items-table th{background-color:#f5f5f5;color:#333;font-weight:600;}
+.items-table input,.items-table select{padding:8px;border:1px solid #ddd;border-radius:3px;width:100%;}
+.items-table input:focus,.items-table select:focus{outline:none;border-color:#4A6B4F;}
+.items-table .item-row input[type="number"]{width:100%;}
+.items-table .gst-select{width:120px;}
+.remove-btn{background-color:#fc5185;color:#fff;padding:6px 12px;border:none;border-radius:3px;cursor:pointer;font-size:12px;}
+.remove-btn:hover{background-color:#d63163;}
+.add-item-btn{background-color:#4A6B4F;color:#fff;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;}
+.add-item-btn:hover{background-color:#3a5a3f;}
+
+/* Totals */
+.totals-section{margin-top:30px;border-top:2px solid #ddd;padding-top:20px;}
+.totals-row{display:flex;justify-content:flex-end;margin-bottom:10px;}
+.totals-label{font-weight:600;color:#333;margin-right:20px;min-width:150px;text-align:right;}
+.totals-value{font-weight:600;color:#4A6B4F;min-width:120px;text-align:right;}
+.grand-total{font-size:1.2em;color:#4A6B4F;border-top:2px solid #4A6B4F;padding-top:10px;margin-top:10px;}
+
+/* Actions */
+.actions{display:flex;gap:15px;justify-content:center;margin-top:30px;}
+.btn-primary,.btn-secondary{padding:12px 30px;border:none;border-radius:5px;font-size:16px;cursor:pointer;font-weight:500;}
+.btn-primary{background-color:#4A6B4F;color:#fff;}
+.btn-primary:hover{background-color:#3a5a3f;}
+.btn-secondary{background-color:#673de6;color:#fff;}
+.btn-secondary:hover{background-color:#5025d1;}
+
+/* Preview Modal */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;overflow:auto;}
+.modal-content{background:#fff;max-width:900px;margin:50px auto;padding:40px;border-radius:10px;position:relative;}
+.close-modal{position:absolute;top:20px;right:20px;font-size:28px;cursor:pointer;color:#999;}
+.close-modal:hover{color:#333;}
+.invoice-preview{padding:20px;}
+.invoice-header{display:flex;justify-content:space-between;margin-bottom:30px;border-bottom:3px solid #4A6B4F;padding-bottom:20px;}
+.invoice-logo img{max-width:250px;}
+.invoice-info{text-align:right;}
+.invoice-info h2{color:#4A6B4F;margin:0 0 10px 0;}
+.customer-details,.company-details{margin-bottom:20px;}
+.preview-table{width:100%;border-collapse:collapse;margin:20px 0;}
+.preview-table th,.preview-table td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}
+.preview-table th{background-color:#4A6B4F;color:#fff;}
+.preview-totals{margin-top:20px;text-align:right;}
+.message{padding:15px;margin-bottom:20px;border-radius:5px;text-align:center;}
+.message.success{background-color:#def4f0;color:#008361;}
+.message.error{background-color:#ffe8ef;color:#d63163;}
+
+@@media print{
+    .header,.actions,.add-item-btn,.remove-btn,.logout-btn{display:none;}
+    .invoice-container{box-shadow:none;border:none;}
+}
+
+@@media (max-width: 768px) {
+    .form-row{grid-template-columns:1fr;}
+    .header-content{flex-direction:column;gap:15px;}
+    .logo-container img{max-width:200px;}
+    .items-table{font-size:12px;}
+    .items-table th,.items-table td{padding:6px;}
+    .actions{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <div class="logo-container">
+            <img src="../assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop,q=95/mjE7pQKNg6tZrakl/pest-control-logo-name-in-one-line-YrDJv9KQpbFRbnKV.png" alt="Calway Pest Control" />
+        </div>
+        <a href="/Admin" class="logout-btn">Logout</a>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="main-content">
+    <h1 class="page-title">Generate Invoice</h1>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="message @(Model.IsSuccess ? "success" : "error")">
+            @Model.Message
+        </div>
+    }
+
+    <div class="invoice-container">
+        <form method="post" id="invoiceForm">
+            <!-- Invoice Details -->
+            <h2 class="section-title">Invoice Details</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="invoiceNumber">Invoice Number</label>
+                    <input type="text" id="invoiceNumber" name="invoiceNumber" value="INV-@DateTime.Now.ToString("yyyyMMdd")-001" required />
+                </div>
+                <div class="form-group">
+                    <label for="invoiceDate">Invoice Date</label>
+                    <input type="date" id="invoiceDate" name="invoiceDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                </div>
+            </div>
+
+            <!-- Customer Details -->
+            <h2 class="section-title">Customer Details</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="customerName">Customer Name</label>
+                    <input type="text" id="customerName" name="customerName" required />
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Customer Email</label>
+                    <input type="email" id="customerEmail" name="customerEmail" required />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="customerPhone">Phone</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" />
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Address</label>
+                    <textarea id="customerAddress" name="customerAddress" rows="3"></textarea>
+                </div>
+            </div>
+
+            <!-- Items Section -->
+            <div class="items-section">
+                <h2 class="section-title">Invoice Items</h2>
+                <button type="button" class="add-item-btn" onclick="addItem()">+ Add Item</button>
+                <table class="items-table" id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th width="35%">Description</th>
+                            <th width="12%">Quantity</th>
+                            <th width="15%">Unit Price</th>
+                            <th width="15%">GST</th>
+                            <th width="15%">Amount</th>
+                            <th width="8%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsTableBody">
+                        <tr class="item-row">
+                            <td><input type="text" name="items[0].description" class="item-description" required /></td>
+                            <td><input type="number" name="items[0].quantity" class="item-quantity" value="1" min="1" step="1" required onchange="calculateRow(this)" /></td>
+                            <td><input type="number" name="items[0].unitPrice" class="item-price" value="0" min="0" step="0.01" required onchange="calculateRow(this)" /></td>
+                            <td>
+                                <select name="items[0].gstType" class="item-gst gst-select" onchange="calculateRow(this)">
+                                    <option value="included">GST Included</option>
+                                    <option value="excluded">GST Excluded</option>
+                                    <option value="none">No GST</option>
+                                </select>
+                            </td>
+                            <td><span class="item-amount">$0.00</span></td>
+                            <td><button type="button" class="remove-btn" onclick="removeItem(this)">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Totals -->
+            <div class="totals-section">
+                <div class="totals-row">
+                    <span class="totals-label">Subtotal:</span>
+                    <span class="totals-value" id="subtotal">$0.00</span>
+                </div>
+                <div class="totals-row">
+                    <span class="totals-label">GST (5%):</span>
+                    <span class="totals-value" id="gstAmount">$0.00</span>
+                </div>
+                <div class="totals-row grand-total">
+                    <span class="totals-label">Total:</span>
+                    <span class="totals-value" id="grandTotal">$0.00</span>
+                </div>
+            </div>
+
+            <!-- Hidden fields for totals -->
+            <input type="hidden" name="subtotalAmount" id="subtotalAmount" value="0" />
+            <input type="hidden" name="gstTotalAmount" id="gstTotalAmount" value="0" />
+            <input type="hidden" name="totalAmount" id="totalAmount" value="0" />
+
+            <!-- Actions -->
+            <div class="actions">
+                <button type="button" class="btn-secondary" onclick="previewInvoice()">Preview Invoice</button>
+                <button type="submit" name="action" value="send" class="btn-primary">Generate & Send Invoice</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div id="previewModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closePreview()">&times;</span>
+        <div class="invoice-preview" id="invoicePreview">
+            <!-- Preview content will be generated here -->
+        </div>
+        <div class="actions" style="margin-top:30px;">
+            <button type="button" class="btn-secondary" onclick="window.print()">Print Invoice</button>
+            <button type="button" class="btn-primary" onclick="closePreview()">Close Preview</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let itemCount = 1;
+const GST_RATE = 0.05; // 5% GST
+
+function addItem() {
+    const tbody = document.getElementById('itemsTableBody');
+    const newRow = document.createElement('tr');
+    newRow.className = 'item-row';
+    newRow.innerHTML = `
+        <td><input type="text" name="items[${itemCount}].description" class="item-description" required /></td>
+        <td><input type="number" name="items[${itemCount}].quantity" class="item-quantity" value="1" min="1" step="1" required onchange="calculateRow(this)" /></td>
+        <td><input type="number" name="items[${itemCount}].unitPrice" class="item-price" value="0" min="0" step="0.01" required onchange="calculateRow(this)" /></td>
+        <td>
+            <select name="items[${itemCount}].gstType" class="item-gst gst-select" onchange="calculateRow(this)">
+                <option value="included">GST Included</option>
+                <option value="excluded">GST Excluded</option>
+                <option value="none">No GST</option>
+            </select>
+        </td>
+        <td><span class="item-amount">$0.00</span></td>
+        <td><button type="button" class="remove-btn" onclick="removeItem(this)">Remove</button></td>
+    `;
+    tbody.appendChild(newRow);
+    itemCount++;
+}
+
+function removeItem(button) {
+    const rows = document.querySelectorAll('.item-row');
+    if (rows.length > 1) {
+        button.closest('tr').remove();
+        calculateTotals();
+    } else {
+        alert('Invoice must have at least one item.');
+    }
+}
+
+function calculateRow(element) {
+    const row = element.closest('tr');
+    const quantity = parseFloat(row.querySelector('.item-quantity').value) || 0;
+    const unitPrice = parseFloat(row.querySelector('.item-price').value) || 0;
+    const gstType = row.querySelector('.item-gst').value;
+    
+    let amount = quantity * unitPrice;
+    
+    // If GST is excluded, it will be added separately in totals
+    // If GST is included, the amount stays as is
+    // If no GST, amount stays as is
+    
+    row.querySelector('.item-amount').textContent = '$' + amount.toFixed(2);
+    calculateTotals();
+}
+
+function calculateTotals() {
+    let subtotal = 0;
+    let gstTotal = 0;
+    
+    document.querySelectorAll('.item-row').forEach(row => {
+        const quantity = parseFloat(row.querySelector('.item-quantity').value) || 0;
+        const unitPrice = parseFloat(row.querySelector('.item-price').value) || 0;
+        const gstType = row.querySelector('.item-gst').value;
+        
+        let itemAmount = quantity * unitPrice;
+        
+        if (gstType === 'included') {
+            // GST is already included in the price, extract it
+            const gstPortion = itemAmount - (itemAmount / (1 + GST_RATE));
+            gstTotal += gstPortion;
+            subtotal += itemAmount - gstPortion;
+        } else if (gstType === 'excluded') {
+            // GST needs to be added
+            subtotal += itemAmount;
+            gstTotal += itemAmount * GST_RATE;
+        } else {
+            // No GST
+            subtotal += itemAmount;
+        }
+    });
+    
+    const grandTotal = subtotal + gstTotal;
+    
+    document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+    document.getElementById('gstAmount').textContent = '$' + gstTotal.toFixed(2);
+    document.getElementById('grandTotal').textContent = '$' + grandTotal.toFixed(2);
+    
+    document.getElementById('subtotalAmount').value = subtotal.toFixed(2);
+    document.getElementById('gstTotalAmount').value = gstTotal.toFixed(2);
+    document.getElementById('totalAmount').value = grandTotal.toFixed(2);
+}
+
+function previewInvoice() {
+    const invoiceNumber = document.getElementById('invoiceNumber').value;
+    const invoiceDate = document.getElementById('invoiceDate').value;
+    const customerName = document.getElementById('customerName').value;
+    const customerEmail = document.getElementById('customerEmail').value;
+    const customerPhone = document.getElementById('customerPhone').value;
+    const customerAddress = document.getElementById('customerAddress').value;
+    
+    if (!customerName || !customerEmail) {
+        alert('Please fill in customer name and email.');
+        return;
+    }
+    
+    let itemsHtml = '';
+    let itemNumber = 1;
+    
+    document.querySelectorAll('.item-row').forEach(row => {
+        const description = row.querySelector('.item-description').value;
+        const quantity = row.querySelector('.item-quantity').value;
+        const unitPrice = row.querySelector('.item-price').value;
+        const gstType = row.querySelector('.item-gst').value;
+        const amount = row.querySelector('.item-amount').textContent;
+        
+        if (description) {
+            itemsHtml += `
+                <tr>
+                    <td>${itemNumber++}</td>
+                    <td>${description}</td>
+                    <td>${quantity}</td>
+                    <td>$${parseFloat(unitPrice).toFixed(2)}</td>
+                    <td>${gstType === 'included' ? 'Inc.' : gstType === 'excluded' ? 'Exc.' : 'N/A'}</td>
+                    <td>${amount}</td>
+                </tr>
+            `;
+        }
+    });
+    
+    const previewHtml = `
+        <div class="invoice-header">
+            <div class="invoice-logo">
+                <img src="../assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop,q=95/mjE7pQKNg6tZrakl/pest-control-logo-name-in-one-line-YrDJv9KQpbFRbnKV.png" alt="Calway Pest Control" />
+            </div>
+            <div class="invoice-info">
+                <h2>INVOICE</h2>
+                <p><strong>Invoice #:</strong> ${invoiceNumber}</p>
+                <p><strong>Date:</strong> ${new Date(invoiceDate).toLocaleDateString()}</p>
+            </div>
+        </div>
+        
+        <div class="company-details">
+            <h3>Calway Pest Control</h3>
+            <p>Calgary, AB</p>
+            <p>Email: info@calwaypest.ca</p>
+        </div>
+        
+        <div class="customer-details">
+            <h3>Bill To:</h3>
+            <p><strong>${customerName}</strong></p>
+            <p>${customerEmail}</p>
+            ${customerPhone ? '<p>' + customerPhone + '</p>' : ''}
+            ${customerAddress ? '<p>' + customerAddress + '</p>' : ''}
+        </div>
+        
+        <table class="preview-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>GST</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${itemsHtml}
+            </tbody>
+        </table>
+        
+        <div class="preview-totals">
+            <p><strong>Subtotal:</strong> ${document.getElementById('subtotal').textContent}</p>
+            <p><strong>GST (5%):</strong> ${document.getElementById('gstAmount').textContent}</p>
+            <h3 style="color:#4A6B4F;"><strong>Total:</strong> ${document.getElementById('grandTotal').textContent}</h3>
+        </div>
+        
+        <div style="margin-top:40px;padding-top:20px;border-top:1px solid #ddd;text-align:center;color:#666;">
+            <p>Thank you for your business!</p>
+        </div>
+    `;
+    
+    document.getElementById('invoicePreview').innerHTML = previewHtml;
+    document.getElementById('previewModal').style.display = 'block';
+}
+
+function closePreview() {
+    document.getElementById('previewModal').style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('previewModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Initialize calculations on page load
+document.addEventListener('DOMContentLoaded', function() {
+    calculateTotals();
+});
+</script>
+</body>
+</html>

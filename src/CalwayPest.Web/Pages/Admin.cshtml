@@ -1,0 +1,111 @@
+@page
+@model CalwayPest.Web.Pages.AdminModel
+@{Layout = null;}
+<!DOCTYPE html><html lang="en"> 
+<head>
+<style>html,body{position:fixed!important;top:0!important;left:0!important;width:100%!important;overflow:hidden!important;}html.loaded,body.loaded{position:static!important;overflow:auto!important;}</style>
+<script>if(window.location.hash){history.replaceState(null,null,window.location.pathname+window.location.search)}if('scrollRestoration'in history){history.scrollRestoration='manual'}window.scrollTo(0,0);document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){if(document.documentElement){document.documentElement.scrollTop=0}if(document.body){document.body.scrollTop=0}window.scrollTo(0,0);document.documentElement.classList.add('loaded');document.body.classList.add('loaded')},200)})</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Login - Calway Pest Control</title>
+<link href="fonts/fonts.css" rel="stylesheet">
+<style>
+html{scroll-behavior:auto !important;overflow:hidden;}
+body{overflow-anchor:none;margin:0;padding:0;font-family:'Open Sans', sans-serif;background-color:#f5f5f5;}
+html.loaded{overflow:auto;}
+
+/* Header Styles */
+.header{background-color:#ffffff;padding:20px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1);position:sticky;top:0;z-index:100;}
+.header-content{max-width:1240px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;}
+.logo-container{display:flex;align-items:center;}
+.logo-container img{max-width:350px;height:auto;display:block;}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{color:#0c131c;text-decoration:none;font-weight:400;font-size:16px;transition:color 0.3s;}
+.nav-links a:hover{color:#0d141a;}
+
+/* Main Content */
+.main-content{min-height:calc(100vh - 103px);display:flex;align-items:center;justify-content:center;padding:40px 20px;background-color:#f5f5f5;}
+.container{max-width:400px;width:100%;padding:40px;background:#ffffff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+h1{color:#4A6B4F;text-align:center;margin-bottom:30px;margin-top:0;}
+.form-group{margin-bottom:20px;position:relative;}
+label{display:block;margin-bottom:8px;color:#333;font-weight:500;}
+input[type="text"],input[type="password"]{width:100%;padding:12px;border:1px solid #ddd;border-radius:5px;font-size:14px;box-sizing:border-box;}
+input[type="text"]:focus,input[type="password"]:focus{outline:none;border-color:#4A6B4F;}
+.password-wrapper{position:relative;}
+.password-wrapper input{padding-right:45px;}
+.toggle-password{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#727586;font-size:18px;padding:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;}
+.toggle-password:hover{color:#4A6B4F;}
+.btn{width:100%;padding:12px;background-color:#4A6B4F;color:#fff;border:none;border-radius:5px;font-size:16px;cursor:pointer;margin-top:10px;}
+.btn:hover{background-color:#3a5a3f;}
+.error{color:#fc5185;margin-top:15px;text-align:center;display:@(Model.ErrorMessage != null ? "block" : "none");}
+.success{color:#00b090;margin-top:15px;text-align:center;display:@(Model.SuccessMessage != null ? "block" : "none");}
+
+/* Responsive */
+@@media (max-width: 768px) {
+    .logo-container img{max-width:208px;}
+    .nav-links{gap:20px;font-size:14px;}
+    .header-content{flex-direction:column;gap:20px;}
+}
+</style>
+</head>
+<body>
+<!-- Header with Logo -->
+<header class="header">
+    <div class="header-content">
+        <div class="logo-container">
+            <a href="/">
+                <img src="../assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop,q=95/mjE7pQKNg6tZrakl/pest-control-logo-name-in-one-line-YrDJv9KQpbFRbnKV.png" alt="Calway Pest Control logo" />
+            </a>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/About">About</a>
+            <a href="/Services">Services</a>
+            <a href="/Contact">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <h1>Admin Login</h1>
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" required />
+                    <button type="button" class="toggle-password" onclick="togglePassword()" aria-label="Toggle password visibility">
+                        <span id="eyeIcon">👁️</span>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            @if (Model.ErrorMessage != null)
+            {
+                <div class="error">@Model.ErrorMessage</div>
+            }
+            @if (Model.SuccessMessage != null)
+            {
+                <div class="success">@Model.SuccessMessage</div>
+            }
+        </form>
+    </div>
+</div>
+<script>
+function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.textContent = '👁️‍🗨️';
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.textContent = '👁️';
+    }
+}
+</script>
+</body>
+</html>

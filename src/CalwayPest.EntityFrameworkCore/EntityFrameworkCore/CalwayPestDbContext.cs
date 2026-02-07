@@ -12,6 +12,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using CalwayPest.Domain;
 
 namespace CalwayPest.EntityFrameworkCore;
 
@@ -24,6 +25,8 @@ public class CalwayPestDbContext :
     ITenantManagementDbContext
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
+    
+    public DbSet<AdminUser> AdminUsers { get; set; }
 
     #region Entities from the modules
 
@@ -75,6 +78,13 @@ public class CalwayPestDbContext :
         builder.ConfigureTenantManagement();
 
         /* Configure your own tables/entities inside here */
+
+        builder.Entity<AdminUser>(b =>
+        {
+            b.ToTable(CalwayPestConsts.DbTablePrefix + "AdminUsers", CalwayPestConsts.DbSchema);
+            b.Property(x => x.Username).IsRequired().HasMaxLength(128);
+            b.Property(x => x.Password).IsRequired().HasMaxLength(256);
+        });
 
         //builder.Entity<YourEntity>(b =>
         //{
