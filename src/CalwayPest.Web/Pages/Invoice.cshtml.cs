@@ -7,19 +7,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CalwayPest.Web.Services;
+using Volo.Abp.Domain.Repositories;
+using CalwayPest.Domain;
 
 namespace CalwayPest.Web.Pages
 {
     public class InvoiceModel : PageModel
     {
         private readonly ICustomEmailSender _emailSender;
+        private readonly IRepository<Invoice, Guid> _invoiceRepository;
 
-        public string Message { get; set; }
+        public string? Message { get; set; }
         public bool IsSuccess { get; set; }
 
-        public InvoiceModel(ICustomEmailSender emailSender)
+        public InvoiceModel(
+            ICustomEmailSender emailSender,
+            IRepository<Invoice, Guid> invoiceRepository)
         {
             _emailSender = emailSender;
+            _invoiceRepository = invoiceRepository;
         }
 
         public IActionResult OnGet()
@@ -74,38 +80,90 @@ namespace CalwayPest.Web.Pages
                 // Filter out empty items
                 var validItems = items.Where(i => !string.IsNullOrWhiteSpace(i.Description)).ToList();
 
-                // Generate invoice HTML for email
-                var invoiceHtml = GenerateInvoiceHtml(
+                // Create invoice entity
+                var invoice = new Invoice(
+                    Guid.NewGuid(),
                     invoiceNumber,
-                    invoiceDate,
+                    DateTime.Parse(invoiceDate),
                     customerName,
                     customerEmail,
-                    customerPhone,
-                    customerAddress,
-                    validItems,
+                    customerPhone ?? "",
+                    customerAddress ?? "",
                     subtotalAmount,
                     gstTotalAmount,
-                    totalAmount
+                    totalAmount,
+                    action == "send" ? "Sent" : "Draft"
                 );
 
-                // Send email
-                await _emailSender.SendEmailAsync(
-                    customerEmail,
-                    $"Invoice {invoiceNumber} from Calway Pest Control",
-                    invoiceHtml,
-                    isBodyHtml: true
-                );
+                // Set sent date if sending
+                if (action == "send")
+                {
+                    invoice.SentDate = DateTime.Now;
+                }
 
-                Message = $"Invoice {invoiceNumber} has been successfully generated and sent to {customerEmail}!";
+                // Add invoice items
+                foreach (var item in validItems)
+                {
+                    var invoiceItem = new CalwayPest.Domain.InvoiceItem(
+                        invoice.Id,
+                        item.Description ?? "",
+                        item.Quantity,
+                        item.UnitPrice,
+                        item.GstType ?? "NoGST"
+                    );
+                    invoice.Items.Add(invoiceItem);
+                }
+
+                // Save invoice to database
+                await _invoiceRepository.InsertAsync(invoice);
+
+                // Send email if action is send
+                if (action == "send")
+                {
+                    // Generate invoice HTML for email
+                    var invoiceHtml = GenerateInvoiceHtml(
+                        invoiceNumber,
+                        invoiceDate,
+                        customerName,
+                        customerEmail,
+                        customerPhone,
+                        customerAddress,
+                        validItems,
+                        subtotalAmount,
+                        gstTotalAmount,
+                        totalAmount
+                    );
+
+                    // Send email
+                    await _emailSender.SendEmailAsync(
+                        customerEmail,
+                        $"Invoice {invoiceNumber} from Calway Pest Control",
+                        invoiceHtml,
+                        isBodyHtml: true
+                    );
+
+                    Message = $"Invoice {invoiceNumber} has been successfully generated, saved, and sent to {customerEmail}!";
+                }
+                else
+                {
+                    Message = $"Invoice {invoiceNumber} has been saved as draft.";
+                }
+
                 IsSuccess = true;
             }
             catch (Exception ex)
             {
-                Message = $"Error sending invoice: {ex.Message}";
+                Message = $"Error processing invoice: {ex.Message}";
                 IsSuccess = false;
             }
 
             return Page();
+        }
+
+        public IActionResult OnPostLogout()
+        {
+            HttpContext.Session.Remove("AdminUser");
+            return RedirectToPage("/Admin");
         }
 
         private string GenerateInvoiceHtml(
@@ -113,8 +171,8 @@ namespace CalwayPest.Web.Pages
             string invoiceDate,
             string customerName,
             string customerEmail,
-            string customerPhone,
-            string customerAddress,
+            string? customerPhone,
+            string? customerAddress,
             List<InvoiceItem> items,
             decimal subtotal,
             decimal gst,
@@ -227,9 +285,9 @@ namespace CalwayPest.Web.Pages
 
     public class InvoiceItem
     {
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
-        public string GstType { get; set; }
+        public string GstType { get; set; } = string.Empty;
     }
 }

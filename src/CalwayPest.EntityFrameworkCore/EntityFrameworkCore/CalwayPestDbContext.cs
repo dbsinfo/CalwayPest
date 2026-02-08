@@ -28,6 +28,8 @@ public class CalwayPestDbContext :
     
     public DbSet<AdminUser> AdminUsers { get; set; }
     public DbSet<ContactSubmission> ContactSubmissions { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
+    public DbSet<InvoiceItem> InvoiceItems { get; set; }
 
     #region Entities from the modules
 
@@ -94,6 +96,27 @@ public class CalwayPestDbContext :
             b.Property(x => x.Email).IsRequired().HasMaxLength(256);
             b.Property(x => x.Message).IsRequired().HasMaxLength(2000);
             b.Property(x => x.FormSource).HasMaxLength(50).HasDefaultValue("ContactForm");
+        });
+
+        builder.Entity<Invoice>(b =>
+        {
+            b.ToTable(CalwayPestConsts.DbTablePrefix + "Invoices", CalwayPestConsts.DbSchema);
+            b.Property(x => x.InvoiceNumber).IsRequired().HasMaxLength(50);
+            b.Property(x => x.CustomerName).IsRequired().HasMaxLength(256);
+            b.Property(x => x.CustomerEmail).HasMaxLength(256);
+            b.Property(x => x.CustomerPhone).HasMaxLength(50);
+            b.Property(x => x.CustomerAddress).HasMaxLength(500);
+            b.Property(x => x.Status).HasMaxLength(50).HasDefaultValue("Draft");
+            b.HasMany(x => x.Items).WithOne(x => x.Invoice).HasForeignKey(x => x.InvoiceId);
+            b.HasIndex(x => x.InvoiceNumber);
+            b.HasIndex(x => x.InvoiceDate);
+        });
+
+        builder.Entity<InvoiceItem>(b =>
+        {
+            b.ToTable(CalwayPestConsts.DbTablePrefix + "InvoiceItems", CalwayPestConsts.DbSchema);
+            b.Property(x => x.Description).IsRequired().HasMaxLength(500);
+            b.Property(x => x.GstType).HasMaxLength(20);
         });
 
         //builder.Entity<YourEntity>(b =>

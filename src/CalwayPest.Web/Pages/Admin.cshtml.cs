@@ -12,8 +12,8 @@ namespace CalwayPest.Web.Pages
     {
         private readonly IRepository<AdminUser, Guid> _adminUserRepository;
 
-        public string ErrorMessage { get; set; }
-        public string SuccessMessage { get; set; }
+        public string? ErrorMessage { get; set; }
+        public string? SuccessMessage { get; set; }
 
         public AdminModel(IRepository<AdminUser, Guid> adminUserRepository)
         {
@@ -38,9 +38,9 @@ namespace CalwayPest.Web.Pages
 
             if (adminUser != null)
             {
-                // Store admin session and redirect to invoice page
+                // Store admin session and redirect to dashboard
                 HttpContext.Session.SetString("AdminUser", username);
-                return RedirectToPage("/Invoice");
+                return RedirectToPage("/Dashboard");
             }
             else
             {

@@ -1,0 +1,237 @@
+@page
+@model CalwayPest.Web.Pages.InvoiceDetailModel
+@{Layout = null;}
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice Details - Calway Pest Control</title>
+<link href="fonts/fonts.css" rel="stylesheet">
+<style>
+html{scroll-behavior:auto !important;}
+body{overflow-anchor:none;margin:0;padding:0;font-family:'Open Sans', sans-serif;background-color:#f5f5f5;}
+
+/* Header */
+.header{background-color:#ffffff;padding:20px 0;box-shadow:0 2px 4px rgba(0,0,0,0.1);position:sticky;top:0;z-index:100;}
+.header-content{max-width:1240px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;}
+.logo-container img{max-width:350px;height:auto;}
+.nav-buttons{display:flex;gap:15px;align-items:center;}
+.nav-btn{background-color:#4A6B4F;color:#fff;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;font-size:14px;}
+.nav-btn:hover{background-color:#3a5a3f;}
+.logout-btn{background-color:#fc5185;color:#fff;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;text-decoration:none;display:inline-block;}
+.logout-btn:hover{background-color:#d63163;}
+
+/* Main Content */
+.main-content{max-width:1000px;margin:40px auto;padding:0 20px;}
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;}
+.page-title{color:#4A6B4F;margin:0;font-size:32px;}
+.back-link{color:#4A6B4F;text-decoration:none;font-size:14px;}
+.back-link:hover{text-decoration:underline;}
+
+/* Invoice Container */
+.invoice-detail{background:#ffffff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);padding:40px;}
+
+/* Invoice Header */
+.invoice-header{display:flex;justify-content:space-between;margin-bottom:30px;padding-bottom:20px;border-bottom:3px solid #4A6B4F;}
+.company-info h2{color:#4A6B4F;margin:0 0 10px 0;}
+.invoice-info{text-align:right;}
+.invoice-info h3{color:#4A6B4F;margin:0 0 10px 0;}
+.status-badge{padding:8px 16px;border-radius:20px;font-size:14px;font-weight:600;display:inline-block;margin-top:10px;}
+.status-draft{background-color:#ffeaa7;color:#6b5e00;}
+.status-sent{background-color:#74b9ff;color:#003d82;}
+.status-paid{background-color:#00b894;color:#fff;}
+.status-cancelled{background-color:#fc5185;color:#fff;}
+
+/* Customer Details */
+.section{margin-bottom:25px;}
+.section h4{color:#4A6B4F;margin-bottom:10px;font-size:18px;}
+.section p{margin:5px 0;color:#555;}
+
+/* Items Table */
+.items-table{width:100%;border-collapse:collapse;margin:25px 0;}
+.items-table thead{background-color:#f5f5f5;}
+.items-table th,.items-table td{padding:15px;text-align:left;border-bottom:1px solid #ddd;}
+.items-table th{color:#333;font-weight:600;font-size:14px;}
+.items-table td{color:#555;font-size:14px;}
+.items-table .text-right{text-align:right;}
+
+/* Totals */
+.totals-section{margin-top:30px;border-top:2px solid #ddd;padding-top:20px;}
+.totals-row{display:flex;justify-content:flex-end;margin-bottom:10px;}
+.totals-label{font-weight:600;color:#333;margin-right:20px;min-width:150px;text-align:right;}
+.totals-value{font-weight:600;color:#4A6B4F;min-width:120px;text-align:right;}
+.grand-total{font-size:1.3em;padding-top:10px;border-top:2px solid #4A6B4F;margin-top:10px;}
+
+/* Action Buttons */
+.action-buttons{margin-top:30px;display:flex;gap:15px;justify-content:flex-end;}
+.btn{padding:12px 25px;border:none;border-radius:5px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-primary{background-color:#4A6B4F;color:#fff;}
+.btn-primary:hover{background-color:#3a5a3f;}
+.btn-secondary{background-color:#727586;color:#fff;}
+.btn-secondary:hover{background-color:#5a5f6e;}
+.btn-danger{background-color:#fc5185;color:#fff;}
+.btn-danger:hover{background-color:#d63163;}
+
+/* Responsive */
+@@media (max-width: 768px) {
+    .logo-container img{max-width:208px;}
+    .nav-buttons{flex-direction:column;gap:10px;}
+    .invoice-header{flex-direction:column;}
+    .invoice-info{text-align:left;margin-top:20px;}
+    .page-header{flex-direction:column;align-items:flex-start;gap:15px;}
+    .action-buttons{flex-direction:column;}
+    .items-table{font-size:12px;}
+    .items-table th,.items-table td{padding:10px 8px;}
+}
+</style>
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <div class="logo-container">
+            <a href="/">
+                <img src="../assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop,q=95/mjE7pQKNg6tZrakl/pest-control-logo-name-in-one-line-YrDJv9KQpbFRbnKV.png" alt="Calway Pest Control logo" />
+            </a>
+        </div>
+        <div class="nav-buttons">
+            <a href="/Dashboard" class="nav-btn">Dashboard</a>
+            <a href="/InvoiceList" class="nav-btn">Invoices</a>
+            <a href="/Invoice" class="nav-btn">Create Invoice</a>
+            <form method="post" asp-page-handler="Logout" style="display:inline;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="page-header">
+        <h1 class="page-title">Invoice Details</h1>
+        <a href="/InvoiceList" class="back-link">← Back to Invoice List</a>
+    </div>
+
+    @if (Model.Invoice != null)
+    {
+        <div class="invoice-detail">
+            <!-- Invoice Header -->
+            <div class="invoice-header">
+                <div class="company-info">
+                    <h2>Calway Pest Control</h2>
+                    <p>Calgary, AB</p>
+                    <p>Email: info@calwaypest.ca</p>
+                </div>
+                <div class="invoice-info">
+                    <h3>INVOICE</h3>
+                    <p><strong>Invoice #:</strong> @Model.Invoice.InvoiceNumber</p>
+                    <p><strong>Date:</strong> @Model.Invoice.InvoiceDate.ToString("MMMM dd, yyyy")</p>
+                    <span class="status-badge status-@Model.Invoice.Status.ToLower()">@Model.Invoice.Status</span>
+                </div>
+            </div>
+
+            <!-- Customer Details -->
+            <div class="section">
+                <h4>Bill To:</h4>
+                <p><strong>@Model.Invoice.CustomerName</strong></p>
+                <p>@Model.Invoice.CustomerEmail</p>
+                @if (!string.IsNullOrWhiteSpace(Model.Invoice.CustomerPhone))
+                {
+                    <p>@Model.Invoice.CustomerPhone</p>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Invoice.CustomerAddress))
+                {
+                    <p>@Model.Invoice.CustomerAddress</p>
+                }
+            </div>
+
+            <!-- Items Table -->
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th style="width:5%;">#</th>
+                        <th style="width:40%;">Description</th>
+                        <th style="width:10%;">Qty</th>
+                        <th style="width:15%;">Unit Price</th>
+                        <th style="width:10%;">GST</th>
+                        <th style="width:20%;" class="text-right">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int itemNumber = 1;}
+                    @foreach (var item in Model.Invoice.Items)
+                    {
+                        <tr>
+                            <td>@itemNumber</td>
+                            <td>@item.Description</td>
+                            <td>@item.Quantity</td>
+                            <td>₹@item.UnitPrice.ToString("N2")</td>
+                            <td>@item.GstType</td>
+                            <td class="text-right">₹@item.Amount.ToString("N2")</td>
+                        </tr>
+                        itemNumber++;
+                    }
+                </tbody>
+            </table>
+
+            <!-- Totals -->
+            <div class="totals-section">
+                <div class="totals-row">
+                    <div class="totals-label">Subtotal:</div>
+                    <div class="totals-value">₹@Model.Invoice.SubtotalAmount.ToString("N2")</div>
+                </div>
+                <div class="totals-row">
+                    <div class="totals-label">GST (5%):</div>
+                    <div class="totals-value">₹@Model.Invoice.GstTotalAmount.ToString("N2")</div>
+                </div>
+                <div class="totals-row grand-total">
+                    <div class="totals-label">Total:</div>
+                    <div class="totals-value">₹@Model.Invoice.TotalAmount.ToString("N2")</div>
+                </div>
+            </div>
+
+            <!-- Additional Info -->
+            @if (Model.Invoice.SentDate.HasValue)
+            {
+                <div class="section" style="margin-top:30px;">
+                    <p><strong>Sent Date:</strong> @Model.Invoice.SentDate.Value.ToString("MMMM dd, yyyy")</p>
+                </div>
+            }
+            @if (Model.Invoice.PaidDate.HasValue)
+            {
+                <div class="section">
+                    <p><strong>Paid Date:</strong> @Model.Invoice.PaidDate.Value.ToString("MMMM dd, yyyy")</p>
+                </div>
+            }
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                @if (Model.Invoice.Status == "Draft")
+                {
+                    <form method="post" asp-page-handler="SendInvoice" style="display:inline;">
+                        <input type="hidden" name="invoiceId" value="@Model.Invoice.Id" />
+                        <button type="submit" class="btn btn-primary">Send Invoice</button>
+                    </form>
+                }
+                @if (Model.Invoice.Status == "Sent")
+                {
+                    <form method="post" asp-page-handler="MarkPaid" style="display:inline;">
+                        <input type="hidden" name="invoiceId" value="@Model.Invoice.Id" />
+                        <button type="submit" class="btn btn-primary">Mark as Paid</button>
+                    </form>
+                }
+                <a href="/InvoiceList" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="invoice-detail">
+            <p style="text-align:center;color:#999;padding:40px;">Invoice not found.</p>
+            <div style="text-align:center;">
+                <a href="/InvoiceList" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    }
+</div>
+</body>
+</html>
