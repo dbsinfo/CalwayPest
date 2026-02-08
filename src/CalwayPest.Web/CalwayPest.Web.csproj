@@ -58,6 +58,7 @@
     <PackageReference Include="Volo.Abp.Account.Web.OpenIddict" Version="9.3.5" />
     <PackageReference Include="Volo.Abp.TenantManagement.Web" Version="9.3.5" />
     <PackageReference Include="Volo.Abp.SettingManagement.Web" Version="9.3.5" />
+    <PackageReference Include="Volo.Abp.MailKit" Version="9.3.5" />
   </ItemGroup>
 
 </Project>

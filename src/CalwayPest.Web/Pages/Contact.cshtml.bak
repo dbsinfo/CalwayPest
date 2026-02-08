@@ -2,9 +2,147 @@
 @model CalwayPest.Web.Pages.ContactModel
 @{Layout = null;}
 <!DOCTYPE html><html lang="en"> 
+<style>
+    .contact-form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #0d141a;
+        font-size: 14px;
+    }
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid rgb(184, 192, 204);
+        border-radius: 10px;
+        font-size: 16px;
+        font-family: 'Open Sans', sans-serif;
+        transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #0d141a;
+    }
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    .submit-btn {
+        background-color: #4A6B4F;
+        color: white;
+        border: none;
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 400;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .submit-btn:hover {
+        background-color: #3a5a3f;
+    }
+    .error-msg {
+        color: #fc5185;
+        font-size: 13px;
+        margin-top: 4px;
+    }
+    .success-message {
+        background-color: #def4f0;
+        color: #008361;
+        padding: 16px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .error-message {
+        background-color: #ffe8ef;
+        color: #d63163;
+        padding: 16px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .page-title {
+        text-align: center;
+        color: #0d141a;
+        font-size: 48px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .page-subtitle {
+        text-align: center;
+        color: rgb(86, 88, 94);
+        font-size: 16px;
+        margin-bottom: 40px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .contact-info {
+        background-color: #2A3D2F;
+        color: white;
+        padding: 40px 20px;
+        margin-top: 40px;
+        text-align: center;
+    }
+    .contact-info h3 {
+        color: white;
+        margin-bottom: 20px;
+    }
+    .contact-info p {
+        margin: 10px 0;
+        font-size: 16px;
+    }
+    .nav-header {
+        background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 40px;
+    }
+    .nav-links {
+        max-width: 1240px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        align-items: center;
+    }
+    .nav-links a {
+        color: rgb(12, 19, 28);
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 400;
+        transition: color 0.2s;
+    }
+    .nav-links a:hover {
+        color: #4A6B4F;
+    }
+    .logo-section {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .logo-section img {
+        max-width: 350px;
+        height: auto;
+    }
+</style>
 <!-- Mirrored from calwaypest.ca/contact by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Feb 2026 17:31:12 GMT -->
 <head>
-@Html.AntiForgeryToken()
 <style>html,body{position:fixed!important;top:0!important;left:0!important;width:100%!important;overflow:hidden!important;}html.loaded,body.loaded{position:static!important;overflow:auto!important;}</style>
 <script>if(window.location.hash){history.replaceState(null,null,window.location.pathname+window.location.search)}if('scrollRestoration'in history){history.scrollRestoration='manual'}window.scrollTo(0,0);document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){if(document.documentElement){document.documentElement.scrollTop=0}if(document.body){document.body.scrollTop=0}window.scrollTo(0,0);document.documentElement.classList.add('loaded');document.body.classList.add('loaded')},200)})</script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Hostinger Website Builder"><!--[--><title>Top Pest Control Services in Calgary at Affordable Prices | Calway Pest Control</title><meta name="description" content="Contact Calway Pest Control for expert pest management in Calgary. We specialize in bedbugs, cockroaches, ants, and more. Our affordable services ensure quality care for all your pest control needs. Reach out today for a consultation and let us protect your home from unwanted pests."><link rel="icon" href="data:;base64,iVBORw0KGgo="><link rel="apple-touch-icon" href="data:;base64,iVBORw0KGgo="><meta content="https://calwaypest.ca/contact" property="og:url"><link rel="canonical" href="/Contact"><meta content="Top Pest Control Services in Calgary at Affordable Prices | Calway Pest Control" property="og:title"><meta name="twitter:title" content="Top Pest Control Services in Calgary at Affordable Prices | Calway Pest Control"><meta content="website" property="og:type"><meta property="og:description" content="Contact Calway Pest Control for expert pest management in Calgary. We specialize in bedbugs, cockroaches, ants, and more. Our affordable services ensure quality care for all your pest control needs. Reach out today for a consultation and let us protect your home from unwanted pests."><meta name="twitter:description" content="Contact Calway Pest Control for expert pest management in Calgary. We specialize in bedbugs, cockroaches, ants, and more. Our affordable services ensure quality care for all your pest control needs. Reach out today for a consultation and let us protect your home from unwanted pests."><meta property="og:site_name" content="Calway Pest Control"><meta name="keywords" content="Calgary pest control, bedbug removal, affordable pest services"><meta property="og:image"><meta name="twitter:image"><meta content="" property="og:image:alt"><meta content="" name="twitter:image:alt"><meta name="twitter:card" content="summary_large_image"><!----><!----><!--[--><link rel="alternate" hreflang="x-default" href="/Contact"><!--]--><!--]--><link href="fonts/fonts.css" rel="stylesheet">
@@ -22,372 +160,6 @@
 <path fill="currentColor" d="M22.5 9.84202C20.4357 9.84696 18.4221 9.20321 16.7435 8.00171V16.3813C16.7429 17.9333 16.2685 19.4482 15.3838 20.7233C14.499 21.9984 13.246 22.973 11.7923 23.5168C10.3387 24.0606 8.75362 24.1477 7.24914 23.7664C5.74466 23.3851 4.39245 22.5536 3.37333 21.383C2.3542 20.2125 1.71674 18.7587 1.54617 17.2161C1.3756 15.6735 1.68007 14.1156 2.41884 12.7507C3.15762 11.3858 4.2955 10.279 5.68034 9.57823C7.06517 8.87746 8.63095 8.61616 10.1683 8.82927V13.0439C9.46481 12.8227 8.70938 12.8293 8.0099 13.063C7.31041 13.2966 6.70265 13.7453 6.2734 14.345C5.84415 14.9446 5.61536 15.6646 5.6197 16.402C5.62404 17.1395 5.8613 17.8567 6.29759 18.4512C6.73387 19.0458 7.34688 19.4873 8.04906 19.7127C8.75125 19.9381 9.5067 19.9359 10.2075 19.7063C10.9084 19.4768 11.5188 19.0316 11.9515 18.4345C12.3843 17.8374 12.6173 17.1188 12.6173 16.3813V0H16.7435C16.7406 0.348435 16.7698 0.696395 16.8307 1.03948C16.9741 1.80537 17.2722 2.53396 17.7068 3.18068C18.1415 3.8274 18.7035 4.37867 19.3585 4.80075C20.2903 5.41688 21.3829 5.74528 22.5 5.74505V9.84202Z"></path>
 </svg></a><a href="https://x.com/" target="_blank" rel="noopener" title="Go to Twitter page" class="social-icons__link" data-v-4f5a0e3f><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24">
 <path fill="currentColor" d="M18.244 2.25H21.552L14.325 10.51L22.827 21.75H16.17L10.956 14.933L4.99003 21.75H1.68003L9.41003 12.915L1.25403 2.25H8.08003L12.793 8.481L18.244 2.25ZM17.083 19.77H18.916L7.08403 4.126H5.11703L17.083 19.77Z"></path>
-</svg></a><!--]--></div><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:3;--grid-row:7/11;--grid-column:1/3;--m-grid-row:4/5;--m-grid-column:1/3;--556236e0:62px;--6114ddae:72px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-kmvLRv" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><ul dir="auto"><li style="color: rgb(255, 255, 255)"><p class="body" style="color: rgb(255, 255, 255); --lineHeightDesktop: 1.3; --fontSizeDesktop: 14px" dir="auto">Inspections</p></li><li style="color: rgb(255, 255, 255)"><p class="body" style="color: rgb(255, 255, 255); --lineHeightDesktop: 1.3; --fontSizeDesktop: 14px" dir="auto">Non-invasive treatments</p></li><li style="color: rgb(255, 255, 255)"><p class="body" style="color: rgb(255, 255, 255); --lineHeightDesktop: 1.3; --fontSizeDesktop: 14px" dir="auto">Wildlife removal</p></li></ul></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:4;--grid-row:3/4;--grid-column:5/6;--m-grid-row:8/9;--m-grid-column:1/3;--556236e0:22px;--6114ddae:21px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-HyZADY" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body-small" style="color: #ffffff" dir="auto"><span style="font-weight: 700"><strong>Contact</strong></span></p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:5;--grid-row:3/4;--grid-column:7/8;--m-grid-row:16/17;--m-grid-column:1/3;--556236e0:22px;--6114ddae:21px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-xOFz7Q" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body-small" style="color: #ffffff" dir="auto"><span style="font-weight: 700"><strong>Support</strong></span></p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:6;--grid-row:10/12;--grid-column:5/6;--m-grid-row:10/11;--m-grid-column:1/3;--556236e0:24px;--6114ddae:24px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-ZCYsNa" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p dir="auto" style="color: rgb(255, 255, 255)" class="body">info@calwaypest.ca</p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:7;--grid-row:6/8;--grid-column:5/6;--m-grid-row:12/13;--m-grid-column:1/3;--556236e0:24px;--6114ddae:24px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-wafVM4" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body" style="color: rgb(255, 255, 255)" dir="auto">+1 587-838-3386</p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--justify:center;--formSpacing:22px 10px;--m-element-margin:0 0 16px 0;--z-index:8;--grid-row:6/14;--grid-column:7/8;--m-grid-row:18/19;--m-grid-column:1/3;--556236e0:137px;--6114ddae:144px;" data-v-862b8f16><!--[--><!----><!----><!----><div id="ai-SihPkI" class="form layout-element__component layout-element__component--GridForm" style="--form-button-justify-self:start;--form-background-color:transparent;--form-border-width:0px;--form-border-radius:0px;--input-fill-color:#ffffff;--input-fill-color--hover:#ffffff;--label-text-color:#ffffff;--label-text-size:16px;--input-text-color:#0d141a;--input-text-color--hover:#0d141a;--input-text-size:16px;--input-height:auto;--input-border-color:rgb(184, 192, 204);--input-border-color--hover:#0d141a;--input-border-width:1px;--input-border-radius:10px;--form-elements-vertical-spacing:12px;--form-spacing:var(--formSpacing);--grid-item-inner-padding:var(--gridItemInnerPadding);--grid-item-inner-background:var(--gridItemInnerBackground);" data-v-862b8f16 data-v-0ea96a22><form name="Contact form 1" class="form__control" data-v-0ea96a22><!--[--><!--[--><div class="input input--light" data-v-0ea96a22 data-v-0fb1d5dc><label for="EmailFooter" class="input__label--light input__label" data-v-0fb1d5dc>Enter your email address</label><input id="EmailFooter" placeholder="your email for updates" type="text" class="input__component--light input__component" value="" tabindex="-1" data-v-0fb1d5dc><!----><!----></div><!----><!--]--><!--]--><button type="submit" name="submit" class="grid-button grid-button--primary form__button" aria-hidden="false" style="--font-size-desktop:14px;--border-radius:50px;--border-width:0px;--background-color:#4A6B4F;--font-color:#ffffff;--border-color:#0d141a;--background-color-hover:#4A6B4F;--font-color-hover:#ffffff;--border-color-hover:#0d141a;--m-height:0vw;--m-width:0vw;" data-v-0ea96a22 data-v-dc96b232>Request Pest Control Service</button></form><!--[--><!----><!--]--></div><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:9;--grid-row:16/17;--grid-column:1/4;--m-grid-row:20/21;--m-grid-column:1/3;--556236e0:18px;--6114ddae:24px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-kkGsJp" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body" style="color: #ffffff; --lineHeightDesktop: 1.3; --fontSizeDesktop: 14px" dir="auto">© 2025. All rights reserved.</p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:10;--grid-row:9/10;--grid-column:5/6;--m-grid-row:14/15;--m-grid-column:1/3;--556236e0:24px;--6114ddae:24px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="zUxCER" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body" style="color: rgb(255, 255, 255)" dir="auto">1-855-203-0890</p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><!--]--><!--]--></div><!----><!----><!----><!----><!----></section><!--]--></div><!----><!----><!----></main><!----><!----><!--]--><!--astro:end--></astro-island> <astro-island uid="dzHMI" component-url="/_astro-1755624028371/Integrations.dGx2wsNy.js" component-export="default" renderer-url="/_astro-1755624028371/client.Dx9cM9g2.js" props="{&quot;siteMeta&quot;:[0,{&quot;version&quot;:[0,197],&quot;template&quot;:[0,&quot;aigenerated&quot;],&quot;metaTitle&quot;:[0,&quot;Calway Pest Control&quot;],&quot;aiWebsiteType&quot;:[0,&quot;Business&quot;],&quot;defaultLocale&quot;:[0,&quot;system&quot;],&quot;isPrivateModeActive&quot;:[0,false],&quot;demoEcommerceStoreId&quot;:[0,&quot;demo_01G0E9P2R0CFTNBWEEFCEV8EG5&quot;],&quot;shouldAddWWWPrefixToDomain&quot;:[0,false]}]}" ssr client="only" opts="{&quot;name&quot;:&quot;Integrations&quot;,&quot;value&quot;:&quot;vue&quot;}"></astro-island> </div>
-<style>
-    .notification-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 9999;
-        max-width: 400px;
-    }
-    
-    .notification {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        padding: 16px 20px;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: flex-start;
-        animation: slideIn 0.3s ease-out;
-        border-left: 4px solid;
-    }
-    
-    .notification.success {
-        border-left-color: #4CAF50;
-        background: linear-gradient(to right, #f1f8f4 0%, #ffffff 100%);
-    }
-    
-    .notification.error {
-        border-left-color: #f44336;
-        background: linear-gradient(to right, #fef1f0 0%, #ffffff 100%);
-    }
-    
-    .notification.warning {
-        border-left-color: #ff9800;
-        background: linear-gradient(to right, #fff8f0 0%, #ffffff 100%);
-    }
-    
-    .notification-icon {
-        font-size: 24px;
-        margin-right: 12px;
-        flex-shrink: 0;
-    }
-    
-    .notification.success .notification-icon {
-        color: #4CAF50;
-    }
-    
-    .notification.error .notification-icon {
-        color: #f44336;
-    }
-    
-    .notification.warning .notification-icon {
-        color: #ff9800;
-    }
-    
-    .notification-content {
-        flex: 1;
-    }
-    
-    .notification-title {
-        font-weight: 600;
-        margin-bottom: 4px;
-        color: #333;
-        font-size: 14px;
-    }
-    
-    .notification-message {
-        color: #666;
-        font-size: 13px;
-        line-height: 1.5;
-    }
-    
-    .notification-close {
-        background: none;
-        border: none;
-        font-size: 20px;
-        color: #999;
-        cursor: pointer;
-        padding: 0;
-        margin-left: 12px;
-        flex-shrink: 0;
-        line-height: 1;
-        transition: color 0.2s;
-    }
-    
-    .notification-close:hover {
-        color: #333;
-    }
-    
-    @@keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @@keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-    
-    .notification.hiding {
-        animation: slideOut 0.3s ease-out forwards;
-    }
-</style>
-
-<script>
-(function() {
-    // Create notification system
-    const NotificationSystem = {
-        container: null,
-        
-        init() {
-            if (!this.container) {
-                this.container = document.createElement('div');
-                this.container.className = 'notification-container';
-                document.body.appendChild(this.container);
-            }
-        },
-        
-        show(message, type = 'success', title = null) {
-            this.init();
-            
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            
-            const icons = {
-                success: '✓',
-                error: '✕',
-                warning: '⚠'
-            };
-            
-            const titles = {
-                success: title || 'Success',
-                error: title || 'Error',
-                warning: title || 'Warning'
-            };
-            
-            notification.innerHTML = `
-                <div class="notification-icon">${icons[type]}</div>
-                <div class="notification-content">
-                    <div class="notification-title">${titles[type]}</div>
-                    <div class="notification-message">${message}</div>
-                </div>
-                <button class="notification-close" aria-label="Close">×</button>
-            `;
-            
-            this.container.appendChild(notification);
-            
-            const closeBtn = notification.querySelector('.notification-close');
-            closeBtn.addEventListener('click', () => this.remove(notification));
-            
-            // Auto remove after 5 seconds
-            setTimeout(() => this.remove(notification), 5000);
-        },
-        
-        remove(notification) {
-            notification.classList.add('hiding');
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-            }, 300);
-        },
-        
-        success(message, title) {
-            this.show(message, 'success', title);
-        },
-        
-        error(message, title) {
-            this.show(message, 'error', title);
-        },
-        
-        warning(message, title) {
-            this.show(message, 'warning', title);
-        }
-    };
-    
-    // Wait for page to load
-    window.addEventListener('load', function() {
-        // Find the main contact form (not the footer one)
-        const forms = document.querySelectorAll('form[name="Contact form"]');
-        if (forms.length === 0) return;
-        
-        const contactForm = forms[0];
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        
-        if (!submitButton) return;
-
-        submitButton.addEventListener('click', async function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Get form values
-            const fullNameInput = contactForm.querySelector('#Full\\ name, input[placeholder="Enter your first name"]');
-            const emailInput = contactForm.querySelector('#Email, input[placeholder="Enter your email address"]');
-            const messageInput = contactForm.querySelector('#Message, textarea[placeholder="Describe your pest issue"]');
-            
-            if (!fullNameInput || !emailInput || !messageInput) {
-                NotificationSystem.error('Form fields not found. Please refresh the page.', 'Form Error');
-                return;
-            }
-
-            const formData = {
-                fullName: fullNameInput.value.trim(),
-                email: emailInput.value.trim(),
-                message: messageInput.value.trim()
-            };
-
-            // Basic validation
-            if (!formData.fullName || !formData.email || !formData.message) {
-                NotificationSystem.warning('Please fill in all required fields to submit your request.', 'Incomplete Form');
-                return;
-            }
-
-            // Disable submit button
-            submitButton.disabled = true;
-            const originalText = submitButton.textContent;
-            submitButton.textContent = 'Sending...';
-
-            try {
-                const antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
-                
-                if (!antiForgeryToken) {
-                    NotificationSystem.error('Security token not found. Please refresh the page and try again.', 'Security Error');
-                    submitButton.disabled = false;
-                    submitButton.textContent = originalText;
-                    return;
-                }
-                
-                const response = await fetch('/Contact', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': antiForgeryToken
-                    },
-                    body: JSON.stringify({
-                        fullName: formData.fullName,
-                        email: formData.email,
-                        message: formData.message,
-                        formSource: 'ContactForm'
-                    })
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    NotificationSystem.success(result.message, 'Message Sent!');
-                    // Clear form
-                    fullNameInput.value = '';
-                    emailInput.value = '';
-                    messageInput.value = '';
-                } else {
-                    NotificationSystem.error(result.message || 'An error occurred while submitting your request. Please try again.', 'Submission Failed');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                NotificationSystem.error('Unable to send your message at this time. Please try again later or contact us directly.', 'Connection Error');
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
-            }
-        });
-        
-        // Handle footer "Request Pest Control Service" form
-        // Use a more aggressive approach to intercept before Vue.js handles it
-        const footerForms = document.querySelectorAll('form[name="Contact form 1"]');
-        if (footerForms.length > 0) {
-            const footerForm = footerForms[0];
-            const footerSubmitBtn = footerForm.querySelector('button[type="submit"]');
-            
-            if (footerSubmitBtn) {
-                // Use capture phase to run before Vue's handlers
-                footerSubmitBtn.addEventListener('click', async function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
-                    
-                    // Get email input
-                    const emailInput = footerForm.querySelector('#EmailFooter, input[placeholder="your email for updates"]');
-                    
-                    if (!emailInput) {
-                        NotificationSystem.error('Email field not found. Please refresh the page.', 'Form Error');
-                        return;
-                    }
-                    
-                    const email = emailInput.value.trim();
-                    
-                    // Validate email
-                    if (!email) {
-                        NotificationSystem.warning('Please enter your email address to request service.', 'Email Required');
-                        return;
-                    }
-                    
-                    const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
-                    if (!emailRegex.test(email)) {
-                        NotificationSystem.warning('Please enter a valid email address.', 'Invalid Email');
-                        return;
-                    }
-                    
-                    // Disable submit button
-                    footerSubmitBtn.disabled = true;
-                    const originalText = footerSubmitBtn.textContent;
-                    footerSubmitBtn.textContent = 'Sending...';
-                    
-                    try {
-                        const antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
-                        
-                        if (!antiForgeryToken) {
-                            NotificationSystem.error('Security token not found. Please refresh the page and try again.', 'Security Error');
-                            footerSubmitBtn.disabled = false;
-                            footerSubmitBtn.textContent = originalText;
-                            return;
-                        }
-                        
-                        const response = await fetch('/Contact', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'RequestVerificationToken': antiForgeryToken
-                            },
-                            body: JSON.stringify({
-                                email: email,
-                                formSource: 'FooterForm'
-                            })
-                        });
-                        
-                        const result = await response.json();
-                        
-                        if (result.success) {
-                            NotificationSystem.success(result.message, 'Request Submitted!');
-                            emailInput.value = '';
-                        } else {
-                            NotificationSystem.error(result.message || 'Unable to submit your request. Please try again.', 'Submission Failed');
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        NotificationSystem.error('Unable to send your request at this time. Please try again later or contact us directly.', 'Connection Error');
-                    } finally {
-                        footerSubmitBtn.disabled = false;
-                        footerSubmitBtn.textContent = originalText;
-                    }
-                }, true); // Use capture phase to intercept before Vue
-                
-                // Also prevent form submission
-                footerForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
-                    return false;
-                }, true);
-            }
-        }
-    });
-})();
-</script>
-</body>
+</svg></a><!--]--></div><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:3;--grid-row:7/11;--grid-column:1/3;--m-grid-row:4/5;--m-grid-column:1/3;--556236e0:62px;--6114ddae:72px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-kmvLRv" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><ul dir="auto"><li style="color: rgb(255, 255, 255)"><p class="body" style="color: rgb(255, 255, 255); --lineHeightDesktop: 1.3; --fontSizeDesktop: 14px" dir="auto">Inspections</p></li><li style="color: rgb(255, 255, 255)"><p class="body" style="color: rgb(255, 255, 255); --lineHeightDesktop: 1.3; --fontSizeDesktop: 14px" dir="auto">Non-invasive treatments</p></li><li style="color: rgb(255, 255, 255)"><p class="body" style="color: rgb(255, 255, 255); --lineHeightDesktop: 1.3; --fontSizeDesktop: 14px" dir="auto">Wildlife removal</p></li></ul></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:4;--grid-row:3/4;--grid-column:5/6;--m-grid-row:8/9;--m-grid-column:1/3;--556236e0:22px;--6114ddae:21px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-HyZADY" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body-small" style="color: #ffffff" dir="auto"><span style="font-weight: 700"><strong>Contact</strong></span></p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:5;--grid-row:3/4;--grid-column:7/8;--m-grid-row:16/17;--m-grid-column:1/3;--556236e0:22px;--6114ddae:21px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-xOFz7Q" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body-small" style="color: #ffffff" dir="auto"><span style="font-weight: 700"><strong>Support</strong></span></p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:6;--grid-row:10/12;--grid-column:5/6;--m-grid-row:10/11;--m-grid-column:1/3;--556236e0:24px;--6114ddae:24px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-ZCYsNa" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p dir="auto" style="color: rgb(255, 255, 255)" class="body">info@calwaypest.ca</p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:7;--grid-row:6/8;--grid-column:5/6;--m-grid-row:12/13;--m-grid-column:1/3;--556236e0:24px;--6114ddae:24px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-wafVM4" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body" style="color: rgb(255, 255, 255)" dir="auto">+1 587-838-3386</p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--justify:center;--formSpacing:22px 10px;--m-element-margin:0 0 16px 0;--z-index:8;--grid-row:6/14;--grid-column:7/8;--m-grid-row:18/19;--m-grid-column:1/3;--556236e0:137px;--6114ddae:144px;" data-v-862b8f16><!--[--><!----><!----><!----><div id="ai-SihPkI" class="form layout-element__component layout-element__component--GridForm" style="--form-button-justify-self:start;--form-background-color:transparent;--form-border-width:0px;--form-border-radius:0px;--input-fill-color:#ffffff;--input-fill-color--hover:#ffffff;--label-text-color:#ffffff;--label-text-size:16px;--input-text-color:#0d141a;--input-text-color--hover:#0d141a;--input-text-size:16px;--input-height:auto;--input-border-color:rgb(184, 192, 204);--input-border-color--hover:#0d141a;--input-border-width:1px;--input-border-radius:10px;--form-elements-vertical-spacing:12px;--form-spacing:var(--formSpacing);--grid-item-inner-padding:var(--gridItemInnerPadding);--grid-item-inner-background:var(--gridItemInnerBackground);" data-v-862b8f16 data-v-0ea96a22><form name="Contact form 1" class="form__control" data-v-0ea96a22><!--[--><!--[--><div class="input input--light" data-v-0ea96a22 data-v-0fb1d5dc><label for="EmailFooter" class="input__label--light input__label" data-v-0fb1d5dc>Enter your email address</label><input id="EmailFooter" placeholder="your email for updates" type="text" class="input__component--light input__component" value="" tabindex="-1" data-v-0fb1d5dc><!----><!----></div><!----><!--]--><!--]--><button type="submit" name="submit" class="grid-button grid-button--primary form__button" aria-hidden="false" style="--font-size-desktop:14px;--border-radius:50px;--border-width:0px;--background-color:#4A6B4F;--font-color:#ffffff;--border-color:#0d141a;--background-color-hover:#4A6B4F;--font-color-hover:#ffffff;--border-color-hover:#0d141a;--m-height:0vw;--m-width:0vw;" data-v-0ea96a22 data-v-dc96b232>Request Pest Control Service</button></form><!--[--><!----><!--]--></div><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:9;--grid-row:16/17;--grid-column:1/4;--m-grid-row:20/21;--m-grid-column:1/3;--556236e0:18px;--6114ddae:24px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="ai-kkGsJp" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body" style="color: #ffffff; --lineHeightDesktop: 1.3; --fontSizeDesktop: 14px" dir="auto">© 2025. All rights reserved.</p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><div class="layout-element layout-element--layout layout-element transition transition--slide" style="--text:left;--align:flex-start;--justify:center;--m-element-margin:0 0 24px 0;--z-index:10;--grid-row:9/10;--grid-column:5/6;--m-grid-row:14/15;--m-grid-column:1/3;--556236e0:24px;--6114ddae:24px;" data-v-862b8f16><!--[--><!----><!----><!----><!----><!----><div class="text-box layout-element__component layout-element__component--GridTextBox" id="zUxCER" data-v-862b8f16 style="--54285089:break-spaces;--6191828b:break-spaces;"><p class="body" style="color: rgb(255, 255, 255)" dir="auto">1-855-203-0890</p></div><!----><!----><!----><!----><!----><!----><!----><!----><!--[--><!--]--><!--]--></div><!--]--><!--]--></div><!----><!----><!----><!----><!----></section><!--]--></div><!----><!----><!----></main><!----><!----><!--]--><!--astro:end--></astro-island> <astro-island uid="dzHMI" component-url="/_astro-1755624028371/Integrations.dGx2wsNy.js" component-export="default" renderer-url="/_astro-1755624028371/client.Dx9cM9g2.js" props="{&quot;siteMeta&quot;:[0,{&quot;version&quot;:[0,197],&quot;template&quot;:[0,&quot;aigenerated&quot;],&quot;metaTitle&quot;:[0,&quot;Calway Pest Control&quot;],&quot;aiWebsiteType&quot;:[0,&quot;Business&quot;],&quot;defaultLocale&quot;:[0,&quot;system&quot;],&quot;isPrivateModeActive&quot;:[0,false],&quot;demoEcommerceStoreId&quot;:[0,&quot;demo_01G0E9P2R0CFTNBWEEFCEV8EG5&quot;],&quot;shouldAddWWWPrefixToDomain&quot;:[0,false]}]}" ssr client="only" opts="{&quot;name&quot;:&quot;Integrations&quot;,&quot;value&quot;:&quot;vue&quot;}"></astro-island> </div>  </body>
 <!-- Mirrored from calwaypest.ca/contact by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Feb 2026 17:31:12 GMT -->
 </html> 

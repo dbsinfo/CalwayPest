@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Volo.Abp.Emailing;
+using CalwayPest.Web.Services;
 
 namespace CalwayPest.Web.Pages
 {
     public class InvoiceModel : PageModel
     {
-        private readonly IEmailSender _emailSender;
+        private readonly ICustomEmailSender _emailSender;
 
         public string Message { get; set; }
         public bool IsSuccess { get; set; }
 
-        public InvoiceModel(IEmailSender emailSender)
+        public InvoiceModel(ICustomEmailSender emailSender)
         {
             _emailSender = emailSender;
         }
@@ -89,10 +89,11 @@ namespace CalwayPest.Web.Pages
                 );
 
                 // Send email
-                await _emailSender.SendAsync(
+                await _emailSender.SendEmailAsync(
                     customerEmail,
                     $"Invoice {invoiceNumber} from Calway Pest Control",
-                    invoiceHtml
+                    invoiceHtml,
+                    isBodyHtml: true
                 );
 
                 Message = $"Invoice {invoiceNumber} has been successfully generated and sent to {customerEmail}!";

@@ -10,6 +10,7 @@ using CalwayPest.EntityFrameworkCore;
 using CalwayPest.Localization;
 using CalwayPest.MultiTenancy;
 using CalwayPest.Web.Menus;
+using CalwayPest.Web.Services;
 using Microsoft.OpenApi.Models;
 using OpenIddict.Validation.AspNetCore;
 using Volo.Abp;
@@ -40,6 +41,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.MailKit;
 
 namespace CalwayPest.Web;
 
@@ -54,7 +56,8 @@ namespace CalwayPest.Web;
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpTenantManagementWebModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule)
+    typeof(AbpSwashbuckleModule),
+    typeof(AbpMailKitModule)
     )]
 public class CalwayPestWebModule : AbpModule
 {
@@ -112,6 +115,8 @@ public class CalwayPestWebModule : AbpModule
         ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
+
+        context.Services.AddTransient<ICustomEmailSender, CustomEmailSender>();
         
         // Add session support
         context.Services.AddDistributedMemoryCache();

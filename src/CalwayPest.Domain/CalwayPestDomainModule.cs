@@ -61,8 +61,9 @@ public class CalwayPestDomainModule : AbpModule
             options.IsEnabled = MultiTenancyConsts.IsEnabled;
         });
 
-#if DEBUG
-        context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
-#endif
+        // Email sending enabled in all configurations
+        // #if DEBUG
+        //     context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
+        // #endif
     }
 }

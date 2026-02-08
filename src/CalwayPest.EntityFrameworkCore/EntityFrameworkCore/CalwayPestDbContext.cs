@@ -27,6 +27,7 @@ public class CalwayPestDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     
     public DbSet<AdminUser> AdminUsers { get; set; }
+    public DbSet<ContactSubmission> ContactSubmissions { get; set; }
 
     #region Entities from the modules
 
@@ -84,6 +85,15 @@ public class CalwayPestDbContext :
             b.ToTable(CalwayPestConsts.DbTablePrefix + "AdminUsers", CalwayPestConsts.DbSchema);
             b.Property(x => x.Username).IsRequired().HasMaxLength(128);
             b.Property(x => x.Password).IsRequired().HasMaxLength(256);
+        });
+
+        builder.Entity<ContactSubmission>(b =>
+        {
+            b.ToTable(CalwayPestConsts.DbTablePrefix + "ContactSubmissions", CalwayPestConsts.DbSchema);
+            b.Property(x => x.FullName).IsRequired().HasMaxLength(256);
+            b.Property(x => x.Email).IsRequired().HasMaxLength(256);
+            b.Property(x => x.Message).IsRequired().HasMaxLength(2000);
+            b.Property(x => x.FormSource).HasMaxLength(50).HasDefaultValue("ContactForm");
         });
 
         //builder.Entity<YourEntity>(b =>
